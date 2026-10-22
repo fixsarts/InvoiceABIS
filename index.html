@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  
-   <link rel="stylesheet"
-    href="https://fixsarts.github.io/footer/css/footer.css">
+
+  <link rel="stylesheet"
+      href="https://fixsarts.github.io/footer/css/footer.css">
            
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -345,9 +345,15 @@ $('go').onclick=async()=>{
   }else m.textContent=r==='declined'?'Download dibatalkan.':r==='overflow'?'Item maksimal '+MAXROWS+' baris.':'Gagal membuat PDF, coba lagi.';
 };
 
-$('dOrder').value=iso(new Date());$('dInv').value=iso(new Date());makeInv();addItem();renderHist();
+<!-- Akhir script invoice -->
+$('dOrder').value=iso(new Date());
+$('dInv').value=iso(new Date());
+makeInv();
+addItem();
+renderHist();
 </script>
   
+<!-- Footer -->
 <footer data-site-footer></footer>
 
 <script src="https://fixsarts.github.io/footer/js/footer-config.js"></script>
