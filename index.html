@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  
+   <linkrel="stylesheet"
+            href="https://fixsarts.github.io/footer/css/footer.css">
+           
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Abis Invoice Generator</title>
@@ -55,6 +59,7 @@ button.go{width:100%;padding:15px;border:0;border-radius:12px;background:var(--p
 .empty{font-size:13px;color:var(--mut);text-align:center;padding:14px 0 4px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#14161c;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;z-index:30;max-width:90vw;text-align:center}
 </style>
+  
 </head>
 <body>
 <div class="wrap">
@@ -341,6 +346,11 @@ $('go').onclick=async()=>{
 };
 
 $('dOrder').value=iso(new Date());$('dInv').value=iso(new Date());makeInv();addItem();renderHist();
+
+<footer data-site-footer></footer>
+<script src="https://fixsarts.github.io/footer/js/footer-config.js"></script>
+<script src="https://fixsarts.github.io/footer/js/footer.js"></script>
+  
 </script>
 </body>
 </html>
