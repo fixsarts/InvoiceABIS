@@ -1,0 +1,390 @@
+/* ==========================================================
+   Abis Invoice Generator - stylesheet halaman
+   ----------------------------------------------------------
+   ATURAN PENTING (penyebab bug header & warna floating dulu):
+   1. Semua variabel warna memakai prefix --abis-* dan hanya
+      dideklarasikan di .abis-app (BUKAN di :root). Dulu variabel
+      generik (--pri, --acc, --bg, --red, ...) di :root menimpa
+      variabel milik header / music player, sehingga gradasi
+      biru-ungu berubah jadi orange.
+   2. Semua selector di-scope ke .abis-app. Dulu selector global
+      (body, h1, label, input, button, .card, .row, .toast, ...)
+      ikut mengacak tampilan header, footer, dan widget floating.
+   ========================================================== */
+
+/* ---------- Variabel (light) ---------- */
+.abis-app {
+  --abis-bg: #f4f5f8;
+  --abis-card: #ffffff;
+  --abis-tx: #14161c;
+  --abis-mut: #6b7280;
+  --abis-bd: #d9dce3;
+  --abis-pri: #1a2f9e;
+  --abis-on: #ffffff;
+  --abis-acc: #f5d300;
+  --abis-red: #d4141c;
+}
+
+/* ---------- Variabel (dark) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .abis-app {
+    --abis-bg: #0f1115;
+    --abis-card: #1a1d24;
+    --abis-tx: #eceef2;
+    --abis-mut: #9aa1ad;
+    --abis-bd: #2c313b;
+    --abis-pri: #7d8fff;
+    --abis-on: #0f1115;
+    --abis-red: #ff6b70;
+  }
+}
+:root[data-theme="dark"] .abis-app {
+  --abis-bg: #0f1115;
+  --abis-card: #1a1d24;
+  --abis-tx: #eceef2;
+  --abis-mut: #9aa1ad;
+  --abis-bd: #2c313b;
+  --abis-pri: #7d8fff;
+  --abis-on: #0f1115;
+  --abis-red: #ff6b70;
+}
+
+/* ---------- Dasar ---------- */
+.abis-app,
+.abis-app *,
+.abis-app *::before,
+.abis-app *::after {
+  box-sizing: border-box;
+}
+
+.abis-app {
+  background: var(--abis-bg);
+  color: var(--abis-tx);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  min-height: 60vh;
+}
+
+.abis-app .wrap {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.abis-app h1 {
+  font-size: 20px;
+  margin: 4px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.abis-app h1 span {
+  background: var(--abis-acc);
+  color: #14161c;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-style: italic;
+  font-weight: 800;
+}
+
+/* ---------- Kartu & form ---------- */
+.abis-app .card {
+  background: var(--abis-card);
+  border: 1px solid var(--abis-bd);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.abis-app label {
+  display: block;
+  font-size: 12px;
+  color: var(--abis-mut);
+  margin: 10px 0 4px;
+}
+.abis-app label:first-child {
+  margin-top: 0;
+}
+
+.abis-app input {
+  width: 100%;
+  font-size: 16px;
+  padding: 11px 12px;
+  border: 1px solid var(--abis-bd);
+  border-radius: 10px;
+  background: var(--abis-bg);
+  color: var(--abis-tx);
+}
+.abis-app input:focus {
+  outline: 2px solid var(--abis-pri);
+  border-color: transparent;
+}
+
+.abis-app .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.abis-app .hint {
+  font-size: 12px;
+  color: var(--abis-mut);
+  margin: 0 0 10px;
+}
+
+/* ---------- Item nota ---------- */
+.abis-app .item {
+  border: 1px dashed var(--abis-bd);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.abis-app .item .row {
+  margin-top: 8px;
+}
+.abis-app .item.drag {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  opacity: 0.93;
+  border-style: solid;
+  border-color: var(--abis-pri);
+  background: var(--abis-card);
+  z-index: 5;
+}
+
+.abis-app .ih {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.abis-app .ih + label {
+  margin-top: 0;
+}
+.abis-app .ih .no {
+  font-size: 13px;
+}
+.abis-app .ih .x {
+  position: static;
+  margin-left: auto;
+}
+
+.abis-app .x {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: 0;
+  color: var(--abis-red);
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.abis-app .grip {
+  touch-action: none;
+  cursor: grab;
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  color: var(--abis-mut);
+  border-radius: 8px;
+  background: var(--abis-bg);
+}
+
+.abis-app .sub {
+  font-size: 12px;
+  color: var(--abis-mut);
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* ---------- Tombol ---------- */
+.abis-app button.add {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1px dashed var(--abis-pri);
+  background: none;
+  color: var(--abis-pri);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.abis-app button.go {
+  width: 100%;
+  padding: 15px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--abis-pri);
+  color: var(--abis-on);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.abis-app .warn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--abis-red);
+  background: none;
+  color: var(--abis-red);
+  font-size: 14px;
+  font-weight: 600;
+}
+.abis-app .sm.arm,
+.abis-app .warn.arm {
+  background: var(--abis-red);
+  color: #fff;
+  border-color: var(--abis-red);
+}
+
+/* ---------- Ringkasan ---------- */
+.abis-app .sum div {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 15px;
+}
+.abis-app .sum .t {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--abis-red);
+  border-top: 1px solid var(--abis-bd);
+  margin-top: 4px;
+  padding-top: 10px;
+}
+
+#abisMsg {
+  text-align: center;
+  font-size: 13px;
+  color: var(--abis-mut);
+  margin: 10px 0 24px;
+  min-height: 18px;
+}
+
+/* ---------- Banner ---------- */
+.abis-app .banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--abis-card);
+  border: 1px solid var(--abis-pri);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.abis-app .banner button {
+  margin-left: auto;
+  white-space: nowrap;
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 0;
+  background: var(--abis-pri);
+  color: var(--abis-on);
+  font-size: 13px;
+  font-weight: 700;
+}
+.abis-app .banner[hidden],
+.abis-app .toast[hidden] {
+  display: none;
+}
+
+/* ---------- Riwayat ---------- */
+.abis-app .hh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.abis-app .hh span {
+  font-size: 12px;
+  color: var(--abis-mut);
+}
+.abis-app .he {
+  border: 1px solid var(--abis-bd);
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.abis-app .hm {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 15px;
+}
+.abis-app .hm .tt {
+  color: var(--abis-red);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.abis-app .hs {
+  font-size: 12px;
+  color: var(--abis-mut);
+  margin: 4px 0 8px;
+}
+.abis-app .hb {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.abis-app .sm {
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--abis-bd);
+  background: var(--abis-bg);
+  color: var(--abis-tx);
+  font-size: 13px;
+  font-weight: 600;
+}
+.abis-app .sm.d {
+  color: var(--abis-red);
+}
+.abis-app .empty {
+  font-size: 13px;
+  color: var(--abis-mut);
+  text-align: center;
+  padding: 14px 0 4px;
+}
+
+/* ---------- Toast ---------- */
+.abis-app .toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  background: #14161c;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  z-index: 30;
+  max-width: 90vw;
+  text-align: center;
+}
+
+/* ---------- Header cadangan ----------
+   Tampil otomatis HANYA jika header.js eksternal gagal memuat header. */
+#abis-header-fallback {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
+  background: linear-gradient(135deg, #3b4fd8, #7b3fe4);
+  color: #fff;
+  font: 700 16px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+#abis-header-fallback[hidden] {
+  display: none;
+}
+
+/* ---------- Override footer ---------- */
+footer[data-site-footer] {
+  --ft-bg: #0a0a0d;
+}
