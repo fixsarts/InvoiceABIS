@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Abis Invoice Generator</title>
 
-  <!-- CSS eksternal (header & footer situs) -->
-  <link rel="stylesheet" href="https://fixsarts.github.io/Header/header.css">
+  <!-- CSS eksternal (footer situs).
+       CSS header SENGAJA tidak dipasang di sini: header.js memuatnya sendiri
+       dari folder yang sama dengan header.js, sehingga path-nya pasti cocok. -->
   <link rel="stylesheet" href="https://fixsarts.github.io/footer/css/footer.css">
 
   <!-- CSS halaman ini (dimuat paling akhir agar override footer berlaku) -->
@@ -95,7 +96,30 @@
   <script src="assets/pdf-assets.js"></script>
 
   <!-- Script situs (header & footer) -->
-  <script src="https://fixsarts.github.io/header/header.js"></script>
+  <script>
+    /* Loader header: coba /Header/ dulu (nama repo asli), lalu /header/.
+       Cek hasilnya di Console browser (F12) dengan awalan [Abis]. */
+    (function () {
+      var bases = ['https://fixsarts.github.io/Header/', 'https://fixsarts.github.io/header/'];
+      var i = 0;
+      function next() {
+        if (i >= bases.length) {
+          console.warn('[Abis] header.js gagal dimuat dari semua alamat:', bases);
+          return;
+        }
+        var s = document.createElement('script');
+        s.src = bases[i++] + 'header.js';
+        s.onload = function () { console.info('[Abis] header dimuat dari', s.src); };
+        s.onerror = function () {
+          console.warn('[Abis] gagal memuat', s.src);
+          s.remove();
+          next();
+        };
+        document.body.appendChild(s);
+      }
+      next();
+    })();
+  </script>
   <script src="https://fixsarts.github.io/footer/js/footer-config.js"></script>
   <script src="https://fixsarts.github.io/footer/js/footer.js"></script>
 

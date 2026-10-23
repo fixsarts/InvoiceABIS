@@ -366,6 +366,18 @@
   text-align: center;
 }
 
+/* ---------- Header situs (header.js) ----------
+   Header bawaan didesain untuk halaman GELAP: background transparan dan
+   teks putih keabu-abuan, jadi di halaman terang ini teksnya hampir tak
+   terlihat sebelum di-scroll. Di sini diberi background gelap permanen. */
+#fa-header-root {
+  display: contents; /* agar position:sticky milik header mengacu ke <body> */
+}
+#fa-header-root .fa-header {
+  background: #0a0a0f;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
 /* ---------- Header cadangan ----------
    Tampil otomatis HANYA jika header.js eksternal gagal memuat header. */
 #abis-header-fallback {
